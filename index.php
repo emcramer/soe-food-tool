@@ -87,21 +87,21 @@
                     <h1>Create Trip</h1>
 
                     <!--content goes here-->
-                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                        Trip Name: <input type="text" name="trip_name" value="<?php echo $trip_name;?>"><br></br>
-                        Number of People: <input type="text" name="trip_headcount" value="<?php echo $trip_headcount;?>"><br></br>
-                        Date of Trip: <input type="text" name="trip_date" value="<?php echo $trip_date;?>"><br></br>
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                        Trip Name: <input type="text" name="trip_name" value="<?php echo $php_trip_name;?>"><br></br>
+                        Number of People: <input type="text" name="trip_headcount" value="<?php echo $php_trip_headcount;?>"><br></br>
+                        Date of Trip: <input type="text" name="trip_date" value="<?php echo $php_trip_date;?>"><br></br>
                         <br></br><input type="submit">
                     </form>
 
                     <?php
                     //define vars and init to ""
-                    $trip_name = $trip_headcount = $trip_date = "";
+                    $php_trip_name = $php_trip_headcount = $php_trip_date = "";
 
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
-                        $trip_name = test_input($_POST["trip_name"]);
-                        $trip_headcount = test_input($_POST["trip_headcount"]);
-                        $trip_date = test_input($_POST["trip_date"]);
+                        $php_trip_name = test_input($_POST["trip_name"]);
+                        $php_trip_headcount = test_input($_POST["trip_headcount"]);
+                        $php_trip_date = test_input($_POST["trip_date"]);
                     }
 
                     function test_input($data){
