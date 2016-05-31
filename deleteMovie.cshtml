@@ -1,0 +1,18 @@
+﻿@{
+    var id = Request["id"];
+    var sqlSelect = "SELECT * FROM Favorites where ID=@0";
+    var db = Database.Open("Movies");
+    var Movie = db.QuerySingle(sqlSelect,id);
+    var MovieName = Movie.Name;
+    if(IsPost){
+        var sqlDelete = "DELETE FROM Favorites WHERE ID = @0";
+        db.Execute(sqlDelete,id);
+        Response.Redirect("dataMovies.cshtml");
+    }
+}
+<h1>Delete a Movie</h1>
+<p>Are you sure you want to remove <strong>@Movie.Name</strong>?</p>
+<form action="" method="post">
+    <input type="submit" value="Yes"/>
+    <input type="button" value="No" onclick="window.location = 'dataMovies.cshtml'"/>
+</form>

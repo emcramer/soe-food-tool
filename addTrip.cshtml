@@ -1,0 +1,28 @@
+﻿@{
+    var TripName="";
+    var NumMeals="";
+    var NumPeople="";
+    var Leaders="";
+    var Date="";
+    var MealList="";
+    if(IsPost){
+        TripName=Request["formName"];
+        NumMeals=Request["formNumMeals"];
+        NumPeople=Request["formNumPeople"];
+        Leaders=Request["formLeaders"];
+        Date=Request["formDate"];
+        var sqlInsert = "INSERT INTO Trips (TRIPNAME,NUMMEALS,NUMPEOPLE,LEADERS,DATE,MEALLIST) VALUES (@0,@1,@2,@3,@4,@5)";
+        var db = Database.Open("food-tool");
+        db.Execute(sqlInsert,TripName,NumMeals,NumPeople,Leaders,Date,MealList);
+        Response.Redirect("trips.cshtml");
+    }
+}
+<h1>Create Your Trip</h1>
+<form action="" method="post">
+    <p>Name:<br/><input type="text" name="formName" /></p>
+    <p>Leaders<br/><input type="text" name="formLeaders" /></p>
+    <p>Date:<br/><input type="date" name="formDate" /></p>
+    <p>Number of People<br/><input type="number" name="formNumPeople" /></p>
+    <p>Number of Meals<br/><input type="number" name="formNumMeals"/></p>
+    <p><input type="submit" value="Add Trip" /></p>
+</form>

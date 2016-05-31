@@ -1,0 +1,17 @@
+﻿@{
+    var db= Database.Open("food-tool");
+    var sqlQ = "SELECT * FROM Ingredients";
+    var data = db.Query(sqlQ);
+}
+
+<div id="ingredientslist">
+    <ol>
+        @foreach(var row in data){
+            <li>
+                <a href="editIngredient.cshtml?id=@row.id">@row.Name</a> Allergy Info:  @row.AllergyInfo
+                <a href="deleteIngredient.cshtml?id=@row.id">Delete</a>
+            </li>
+        }
+    </ol>
+    <a href="addIngredient.cshtml">Add New Ingredient</a>
+</div>

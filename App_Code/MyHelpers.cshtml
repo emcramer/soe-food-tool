@@ -1,0 +1,67 @@
+﻿@using FoodTool
+
+@helper GetPrepInfo(String[] MealList, int numPeople, int numGroups) {
+
+  var ListOfIngredients = new List<IngredientClass>();
+  var ListOfMealsStrings = new List<string>();
+  var ListOfMealsIngredients = new List<string>();
+  var ListOfMealsRatios = new List<string>();
+
+  var sqlQuery = "SELECT * FROM Meals WHERE MealName LIKE @0";
+  var db = Database.Open("food-tool"); 
+  var AllMeals = db.Query("SELECT * FROM Meals");
+  foreach(var meal in AllMeals){
+      ListOfMealsStrings.Add(meal.MealName);
+      ListOfMealsIngredients.Add(meal.Ingredients);
+      ListOfMealsRatios.Add(meal.Ratios);
+    }
+
+  string[] Ingredients;
+  string[] RatiosString;
+
+  for(int i = 0; i < MealList.Length; i++){
+      if(ListOfMealsStrings.Contains(MealList[i])){
+        var index = ListOfMealsStrings.IndexOf(MealList[i]);
+        Ingredients = ListOfMealsIngredients[index].Split(';');
+        RatiosString = ListOfMealsRatios[index].Split(':');
+      }else{
+          continue;
+      }
+      
+      int[] Ratios = new int[RatiosString.Length];
+      for(int y = 0; y < RatiosString.Length; y++){
+          Ratios[y] = RatiosString[y].AsInt();
+      }
+
+      var ListOfIngredientsStrings = new List<string>();
+      foreach(var ingredient in ListOfIngredients){
+              ListOfIngredientsStrings.Add(ingredient.Name);
+       }
+
+      for(int j = 0; j < Ratios.Length; j++){
+          if(ListOfIngredientsStrings.Contains(Ingredients[j])){
+              var index = ListOfIngredientsStrings.IndexOf(Ingredients[j]);
+              ListOfIngredients[index].Ratio += ((Ratios[j] * numPeople) / numGroups);
+          }else{
+              IngredientClass newIngredient = new IngredientClass();
+              newIngredient.Name = Ingredients[j];
+              newIngredient.Ratio = Ratios[j];
+              ListOfIngredients.Add(newIngredient);
+          }
+      }
+  }
+  <table border="1" style="width: 100%; text-align: center;">
+      <tr>
+        <td><strong>Staged</strong></td>
+        <td><strong>Item</strong></td>
+        <td><strong>Amount</strong></td>
+      </tr>
+    @foreach(var ingredient in ListOfIngredients){
+        <tr>
+            <td><p>     </p></td>
+            <td>@ingredient.Name</td>
+            <td>@ingredient.Ratio</td>
+        </tr>
+    }
+  </table>
+}

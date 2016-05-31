@@ -1,0 +1,34 @@
+﻿@{
+    var id=Request["id"];
+    var sqlSelect = "SELECT * FROM Trips where ID=@0";
+    var db = Database.Open("food-tool");
+    var Trip = db.QuerySingle(sqlSelect,id);
+    var TripName = Trip.TripName;
+    var Leaders = Trip.Leaders;
+    var Date = Trip.Date;
+    var NumPeople = Trip.NumPeople;
+    var NumMeals = Trip.NumMeals;
+    var MealList = Trip.MealList;
+    if(IsPost){
+        TripName=Request["formName"];
+        Leaders=Request["formLeaders"];
+        Date=Request["formDate"];
+        NumPeople=Request["formNumPeople"];
+        NumMeals=Request["formNumMeals"];
+        var sqlUpdate = "UPDATE Trips Set TripName = @0, Leaders = @1, Date = @2, NumPeople = @3, NumMeals = @4, MealList = @5 WHERE id = @6";
+        db.Execute(sqlUpdate,TripName,Leaders,Date,NumPeople,NumMeals,MealList,id);
+        Response.Redirect("trips.cshtml");
+    }
+
+}
+
+<h1>Edit a Trip</h1>
+<form action="" method="post">
+    <p>Name:<br/><input type="text" name="formName" value="@TripName"/></p>
+    <p>Leaders:<br/><input type="text" name="formLeaders" value="@Leaders"/></p>
+    <p>Date:<br/><input type="date" name="formDate" value="@Date"/></p>
+    <p>Number of People:<br/><input type="number" name="formNumPeople" value="@NumPeople"/></p>
+    <p>Number of Meals:<br/><input type="number" name="formNumMeals" value="@NumMeals"/></p>
+    <p><input type="submit" value="Add Trip" /></p>
+</form>
+

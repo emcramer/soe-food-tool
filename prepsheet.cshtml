@@ -1,0 +1,21 @@
+﻿@using FoodTool;
+@{
+   var TripName="";
+    String[] TripMeals;
+    if(IsPost){
+        TripName=Request["formName"];
+        int NumCookGroups=Request["formNumCookGroups"].AsInt();
+        var sqlQuery="SELECT * FROM Trips WHERE TripName LIKE @0";
+        var db = Database.Open("food-tool");
+        var Trip = db.QuerySingle(sqlQuery,TripName);
+        var NumPeople = Trip.NumPeople;
+        TripMeals = Trip.MealList.Split(';');
+        @MyHelpers.GetPrepInfo(TripMeals,(int)NumPeople,(int)NumCookGroups);
+    }
+}
+<form action="" method="post">
+    <p>Name of Trip: <input type="text" name="formName"/></p>
+    <p>Number of Cook Groups: <input type="number" name="formNumCookGroups"/></p>
+    <input type="submit" value="Get Prep Sheet"/>
+</form>
+ 

@@ -1,0 +1,18 @@
+﻿@{
+    var id = Request["id"];
+    var sqlSelect = "SELECT * FROM Trips where ID=@0";
+    var db = Database.Open("food-tool");
+    var Trip = db.QuerySingle(sqlSelect,id);
+    var TripName = Trip.TripName;
+    if(IsPost){
+        var sqlDelete = "DELETE FROM trips WHERE ID = @0";
+        db.Execute(sqlDelete,id);
+        Response.Redirect("trips.cshtml");
+    }
+}
+<h1>Delete a Trip</h1>
+<p>Are you sure you want to remove <strong>@Trip.TripName</strong>?</p>
+<form action="" method="post">
+    <input type="submit" value="Yes"/>
+    <input type="button" value="No" onclick="window.location = 'trips.cshtml'"/>
+</form>

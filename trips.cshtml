@@ -1,0 +1,18 @@
+﻿@{
+    var db= Database.Open("food-tool");
+    var sqlQ = "SELECT * FROM Trips";
+    var data = db.Query(sqlQ);
+}
+
+<div id="tripslist">
+    <ol>
+        @foreach(var row in data){
+            <li>
+                <a href="editTrip.cshtml?id=@row.id">@row.TripName, @row.Leaders, @row.Date</a>
+                <a href="viewTrip.cshtml?id=@row.id">View Trip Summary</a>
+                <a href="deleteTrip.cshtml?id=@row.id">Delete</a>
+            </li>
+        }
+    </ol>
+    <a href="addTrip.cshtml">Add New Trip</a>
+</div>

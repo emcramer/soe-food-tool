@@ -1,0 +1,24 @@
+﻿@{
+    var id=Request["id"];
+    var sqlSelect = "SELECT * FROM Trips where ID=@0";
+    var db = Database.Open("food-tool");
+    var Trip = db.QuerySingle(sqlSelect,id);
+    var TripName = Trip.TripName;
+    var Leaders = Trip.Leaders;
+    var Date = Trip.Date;
+    var NumPeople = Trip.NumPeople;
+    var NumMeals = Trip.NumMeals;
+    var MealList = Trip.MealList;
+}
+
+<div id="tripsummary">
+    <h1>Trip Summary for @TripName</h1>
+    <p><strong>Trip Leaders:</strong> @Leaders</p>
+    <p><strong>Trip Date:</strong>@Date</p>
+    <p><strong>Number of People:</strong> @NumPeople</p>
+    <p><strong>Number of Meals:</strong> @NumMeals</p>
+    <p><strong>Meal List:</strong> @MealList</p>
+</div>
+
+
+

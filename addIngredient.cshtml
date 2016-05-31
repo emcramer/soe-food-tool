@@ -1,0 +1,24 @@
+﻿@{
+    var IngredientName="";
+    var IngredientType="";
+    var IngredientSource="";
+    var AllergyInfo="";
+    if(IsPost){
+        IngredientName=Request["formName"];
+        IngredientType=Request["formType"];
+        IngredientSource=Request["formSource"];
+        AllergyInfo=Request["formAllergyInfo"];
+        var sqlInsert = "INSERT INTO Ingredients (Name,Type,Source,AllergyInfo) VALUES (@0,@1,@2,@3)";
+        var db = Database.Open("food-tool");
+        db.Execute(sqlInsert,IngredientName,IngredientType,IngredientSource,AllergyInfo);
+        Response.Redirect("ingredients.cshtml");
+    }
+}
+<h1>Add New Ingredient</h1>
+<form action="" method="post">
+    <p>Name:<br/><input type="text" name="formName" /></p>
+    <p>Type:<br/><input type="text" name="formType" /></p>
+    <p>Source:<br/><input type="text" name="formSource" /></p>
+    <p>Allergy Information:<br/><input type="text" name="formAllergyInfo" /></p>
+    <p><input type="submit" value="Add Ingredient" /></p>
+</form>

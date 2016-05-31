@@ -1,0 +1,29 @@
+﻿@{
+    var id=Request["id"];
+    var sqlSelect = "SELECT * FROM Meals where ID=@0";
+    var db = Database.Open("food-tool");
+    var Meal= db.QuerySingle(sqlSelect,id);
+    var MealName = Meal.MealName;
+    var MealType = Meal.Type;
+    var Ratios = Meal.Ratios;
+    var MealIngredients = Meal.Ingredients;
+    if(IsPost){
+        MealName=Request["formName"];
+        MealType=Request["formType"];
+        Ratios=Request["formRatios"];
+        MealIngredients=Request["formMealIngredients"];
+        var sqlUpdate = "UPDATE Meals Set MealName = @0, Type = @1, Ratios = @2, Ingredients = @3 WHERE id = @4";
+        db.Execute(sqlUpdate,MealName,MealType,Ratios,MealIngredients,id);
+        Response.Redirect("meals.cshtml");
+    }
+}
+
+<h1>Edit Meal</h1>
+<form action="" method="post">
+    <p>Meal Name:<br/><input type="text" name="formName" value="@MealName"/></p>
+    <p>Meal Type:<br/><input type="text" name="formType" value="@MealType"/></p>
+    <p>Ingredient Ratios:<br/><input type="text" name="formRatios" value="@Ratios"/></p>
+    <p>Ingredients:<br/><input type="text" name="formMealIngredients" value="@MealIngredients"/></p>
+    <p><input type="submit" value="Edit Meal" /></p>
+</form>
+

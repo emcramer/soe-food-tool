@@ -1,0 +1,34 @@
+.Title{
+    font-size: xx-large;
+    font-weight: normal;
+    padding: 0px;
+    margin: 0px;
+}
+#movieslist{
+    font-family: Geneva, Tahoma, sans-serif;
+}
+#movieslist ol{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+#movieslist li a{
+    font-size: large;
+    color: #000000;
+    display: block;
+    padding:  5px;
+}
+#movieslist li a:hover{
+    border-left: 10px solid #94c9d4;
+    padding-left: 10px;
+    background-color: #e7f5f8;
+    text-decoration: none;
+}
+#footer{
+    font-size: smaller;
+    color: #ccc;
+    text-align: center;
+    padding: 20px 10px 10px 10px;
+    border-top: 1px solid #e5e5e5;
+}

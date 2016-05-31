@@ -1,0 +1,29 @@
+﻿@{
+    var id=Request["id"];
+    var sqlSelect = "SELECT * FROM Ingredients where ID=@0";
+    var db = Database.Open("food-tool");
+    var Ingredient = db.QuerySingle(sqlSelect,id);
+    var IngredientName = Ingredient.Name;
+    var Type = Ingredient.Type;
+    var Source = Ingredient.Source;
+    var AllergyInfo = Ingredient.AllergyInfo;
+    if(IsPost){
+        IngredientName=Request["formName"];
+        Type=Request["formType"];
+        Source=Request["formSource"];
+        AllergyInfo=Request["formAllergyInfo"];
+        var sqlUpdate = "UPDATE Ingredients Set Name = @0, Type = @1, Source = @2, AllergyInfo = @3 WHERE id = @4";
+        db.Execute(sqlUpdate,IngredientName,Type,Source,AllergyInfo,id);
+        Response.Redirect("ingredients.cshtml");
+    }
+}
+
+<h1>Edit Ingredient Information</h1>
+<form action="" method="post">
+    <p>Name:<br/><input type="text" name="formName" value="@IngredientName"/></p>
+    <p>Type:<br/><input type="text" name="formType" value="@Type"/></p>
+    <p>Source:<br/><input type="text" name="formSource" value="@Source"/></p>
+    <p>Allergy Information<br/><input type="text" name="formAllergyInfo" value="@AllergyInfo"/></p>
+    <p><input type="submit" value="Edit Ingredient" /></p>
+</form>
+
